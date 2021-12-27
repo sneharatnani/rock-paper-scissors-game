@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: peru;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    text-transform: capitalize;
+}
+
+#ply-score-container,
+#comtr-score-container {
+    display: inline-block;
+}
+
+button {
+    font-size: 1.5rem;
+}
+
+#choice div {
+    display: inline-block;
+}

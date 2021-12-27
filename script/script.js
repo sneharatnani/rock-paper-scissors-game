@@ -33,7 +33,7 @@ function playRound() {
 }
 
 // get input from user using prompt | it should be case insensitive
-let userPlay = () => prompt("please enter your choice", "").toLowerCase();
+
 
 // make a function to get random choice from computer
 function computerPlay() {
@@ -43,9 +43,18 @@ function computerPlay() {
 
 // this function will play some rounds and will return score and winner at the end of those rounds
 function game() {
-    for (let i = 0; i < 5; i++) {
+    while (computerScore < 2 && playerScore < 2) {
         console.log(playRound());
     }
+
+    /*     for (let i = 0; i < 5; i++) {
+            console.log(playRound());
+        } */
+    return getWinner();
+
+}
+
+function getWinner() {
     if (playerScore > computerScore) {
         return `player: ${playerScore} and computer: ${computerScore} You won!!!`;
     } else if (playerScore < computerScore) {
@@ -54,7 +63,8 @@ function game() {
         return `player: ${playerScore} and computer: ${computerScore} No one won!!`;
     }
 }
-console.log(game());
+/* console.log(game()); */
+
 
 
 
