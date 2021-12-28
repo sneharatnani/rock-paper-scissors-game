@@ -3,37 +3,21 @@ let playerScore = 0;
 let computerScore = 0;
 
 // make a function which takes computer's choice and user's choice and return greeting and score
-function playRound() {
-    // variables which will save user and computer's choice
-    let playerSelection = userPlay();
-    let computerSelection = computerPlay();
 
-    switch (true) {
-        case (playerSelection === "rock" && computerSelection === "paper"):
-            return ["You loose! paper beats rock", `You: ${playerScore}`, `computer: ${++computerScore}`];
 
-        case (playerSelection === "rock" && computerSelection === "scissors"):
-            return ["You win! rock beats scissors", `You: ${++playerScore}`, `computer: ${computerScore}`];
+let playerOptions = document.querySelectorAll('.option button');
+let playerChoice = document.querySelector('#player-choice');
+let cShow = document.querySelector('#comp-choice');
+let inform = document.querySelector('#show-text');
+let playerPoint = document.querySelector('.player-score');
+let compPoint = document.querySelector('.computer-score');
+let winner = document.querySelector('#declare-winner');
+let tryAgain = document.createElement('button');
+tryAgain.textContent = 'try again';
 
-        case (playerSelection === "paper" && computerSelection === "rock"):
-            return ["You win! paper beats rock", `You: ${++playerScore}`, `computer: ${computerScore}`];
-
-        case (playerSelection === "paper" && computerSelection === "scissors"):
-            return ["You loose! scissors beats paper", `You: ${playerScore}`, `computer: ${++computerScore}`];
-
-        case (playerSelection === "scissors" && computerSelection === "rock"):
-            return ["You loose! rock beats scissors", `You: ${playerScore}`, `computer: ${++computerScore}`];
-
-        case (playerSelection === "scissors" && computerSelection === "paper"):
-            return ["You win! scissors beats paper", `You: ${++playerScore}`, `computer: ${computerScore}`];
-
-        default:
-            return ["it's a tie", `You: ${playerScore}`, `computer: ${computerScore}`];
-    }
-}
-
-// get input from user using prompt | it should be case insensitive
-
+tryAgain.addEventListener('click', () => {
+    window.reload();
+})
 
 // make a function to get random choice from computer
 function computerPlay() {
@@ -41,29 +25,78 @@ function computerPlay() {
     return choice[Math.floor(Math.random() * choice.length)];
 }
 
-// this function will play some rounds and will return score and winner at the end of those rounds
-function game() {
-    while (computerScore < 2 && playerScore < 2) {
-        console.log(playRound());
+function showPlayerChoice(e) {
+    playerChoice.textContent = e.target.id;
+}
+
+
+function oneRound(e) {
+    computerSelection = computerPlay();
+    cShow.textContent = computerSelection;
+
+
+    while (computerScore < 3 && playerScore < 3) {
+        switch (true) {
+            case (e.target.id === 'rock' && computerSelection === "paper"):
+                return inform.textContent = 'You loose! paper beats rock', playerPoint.textContent = playerScore, compPoint.textContent = ++computerScore;
+
+            case (e.target.id === 'rock' && computerSelection === "scissors"):
+                return inform.textContent = "You win! rock beats scissors", playerPoint.textContent = ++playerScore, compPoint.textContent = computerScore;
+
+            case (e.target.id === 'paper' && computerSelection === 'rock'):
+                return inform.textContent = 'You win! paper beats rock', playerPoint.textContent = ++playerScore, compPoint.textContent = computerScore;
+
+            case (e.target.id === 'paper' && computerSelection === 'scissors'):
+                return inform.textContent = 'You loose! scissors beats paper', playerPoint.textContent = playerScore, compPoint.textContent = ++computerScore;
+
+            case (e.target.id === 'scissors' && computerSelection === 'rock'):
+                return inform.textContent = 'You loose! rock beats scissors', playerPoint.textContent = playerScore, compPoint.textContent = ++computerScore;
+
+            case (e.target.id === 'scissors' && computerSelection === 'paper'):
+                return inform.textContent = 'You win! scissors beats paper', playerPoint.textContent = ++playerScore, compPoint.textContent = computerScore;
+
+            case (e.target.id === computerSelection):
+                return inform.textContent = "it's a tie", playerPoint.textContent = playerScore, compPoint.textContent = computerScore;
+
+        }
     }
 
-    /*     for (let i = 0; i < 5; i++) {
-            console.log(playRound());
-        } */
-    return getWinner();
+
+    getWinner();
+}
+
+playerOptions.forEach((str) => {
+    str.addEventListener('click', showPlayerChoice);
+});
+
+playerOptions.forEach((arr) => {
+    arr.addEventListener('click', oneRound);
+});
+
+
+
+
+// this function will play some rounds and will return score and winner at the end of those rounds
+function game() {
+    /*  while (computerScore < 3 && playerScore < 3) {
+ 
+     } */
 
 }
+
+
 
 function getWinner() {
     if (playerScore > computerScore) {
-        return `player: ${playerScore} and computer: ${computerScore} You won!!!`;
-    } else if (playerScore < computerScore) {
-        return `player: ${playerScore} and computer: ${computerScore} You lost!!!`;
+        winner.textContent = `player: ${playerScore} and computer: ${computerScore} You won!!!`;
+
     } else {
-        return `player: ${playerScore} and computer: ${computerScore} No one won!!`;
+        winner.textContent = `player: ${playerScore} and computer: ${computerScore} You lost!!!`;
     }
+
+    winner.appendChild(tryAgain);
+
 }
-/* console.log(game()); */
 
 
 
