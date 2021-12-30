@@ -1,23 +1,26 @@
-// make 2 variable which will store the score of computer and player
+// to save the score
 let playerScore = 0;
 let computerScore = 0;
 
-// make a function which takes computer's choice and user's choice and return greeting and score
-
-
-let playerOptions = document.querySelectorAll('.option button');
+let main = document.querySelector('main');
+let playerOptions = document.querySelectorAll('.option input');
 let playerChoice = document.querySelector('#player-choice');
-let cShow = document.querySelector('#comp-choice');
+let compChoice = document.querySelector('#comp-choice');
 let inform = document.querySelector('#show-text');
 let playerPoint = document.querySelector('.player-score');
 let compPoint = document.querySelector('.computer-score');
-let winner = document.querySelector('#declare-winner');
-let tryAgain = document.createElement('button');
-tryAgain.textContent = 'try again';
 
-tryAgain.addEventListener('click', () => {
-    window.reload();
-})
+// for modal
+let modal = document.createElement('div');
+let modalHead = document.createElement('h2');
+let modalBtn = document.createElement('button');
+modalHead.classList.add('pop-head');
+modal.classList.add('pop-up');
+modalBtn.classList.add('pop-button');
+modalBtn.textContent = 'play again';
+modal.append(modalHead, modalBtn);
+
+
 
 // make a function to get random choice from computer
 function computerPlay() {
@@ -25,78 +28,125 @@ function computerPlay() {
     return choice[Math.floor(Math.random() * choice.length)];
 }
 
-function showPlayerChoice(e) {
-    playerChoice.textContent = e.target.id;
-}
 
+// this will play the game till the score reaches 5 points and declare the final winner at the end
+function playGame(e) {
+    if (playerScore < 5 && computerScore < 5) {
 
-function oneRound(e) {
-    computerSelection = computerPlay();
-    cShow.textContent = computerSelection;
+        computerSelection = computerPlay();
+        compChoice.textContent = computerSelection;
+        playerChoice.textContent = e.target.id;
 
-
-    while (computerScore < 3 && playerScore < 3) {
         switch (true) {
             case (e.target.id === 'rock' && computerSelection === "paper"):
-                return inform.textContent = 'You loose! paper beats rock', playerPoint.textContent = playerScore, compPoint.textContent = ++computerScore;
+                playerPoint.textContent = playerScore;
+                compPoint.textContent = ++computerScore;
+                inform.textContent = "You loose! paper beats rock";
+                getWinner();
+                break;
 
             case (e.target.id === 'rock' && computerSelection === "scissors"):
-                return inform.textContent = "You win! rock beats scissors", playerPoint.textContent = ++playerScore, compPoint.textContent = computerScore;
+                playerPoint.textContent = ++playerScore;
+                compPoint.textContent = computerScore;
+                inform.textContent = "You win! rock beats scissors";
+                getWinner();
+                break;
 
             case (e.target.id === 'paper' && computerSelection === 'rock'):
-                return inform.textContent = 'You win! paper beats rock', playerPoint.textContent = ++playerScore, compPoint.textContent = computerScore;
+                playerPoint.textContent = ++playerScore;
+                compPoint.textContent = computerScore;
+                inform.textContent = 'You win! paper beats rock';
+                getWinner();
+                break;
 
             case (e.target.id === 'paper' && computerSelection === 'scissors'):
-                return inform.textContent = 'You loose! scissors beats paper', playerPoint.textContent = playerScore, compPoint.textContent = ++computerScore;
+                playerPoint.textContent = playerScore;
+                compPoint.textContent = ++computerScore;
+                inform.textContent = 'You loose! scissors beats paper';
+                getWinner();
+                break;
+
 
             case (e.target.id === 'scissors' && computerSelection === 'rock'):
-                return inform.textContent = 'You loose! rock beats scissors', playerPoint.textContent = playerScore, compPoint.textContent = ++computerScore;
+                playerPoint.textContent = playerScore;
+                compPoint.textContent = ++computerScore;
+                inform.textContent = 'You loose! rock beats scissors';
+                getWinner();
+                break;
 
             case (e.target.id === 'scissors' && computerSelection === 'paper'):
-                return inform.textContent = 'You win! scissors beats paper', playerPoint.textContent = ++playerScore, compPoint.textContent = computerScore;
+                playerPoint.textContent = ++playerScore;
+                compPoint.textContent = computerScore
+                inform.textContent = 'You win! scissors beats paper'
+                getWinner();
+                break;
+
 
             case (e.target.id === computerSelection):
-                return inform.textContent = "it's a tie", playerPoint.textContent = playerScore, compPoint.textContent = computerScore;
-
+                playerPoint.textContent = playerScore;
+                compPoint.textContent = computerScore;
+                inform.textContent = "it's a tie"
+                getWinner();
+                break;
         }
     }
-
-
-    getWinner();
-}
-
-playerOptions.forEach((str) => {
-    str.addEventListener('click', showPlayerChoice);
-});
-
-playerOptions.forEach((arr) => {
-    arr.addEventListener('click', oneRound);
-});
-
-
-
-
-// this function will play some rounds and will return score and winner at the end of those rounds
-function game() {
-    /*  while (computerScore < 3 && playerScore < 3) {
- 
-     } */
-
 }
 
 
+playerOptions.forEach((option) => {
+    option.addEventListener('click', playGame);
+});
 
+
+// declare the final winner
 function getWinner() {
-    if (playerScore > computerScore) {
-        winner.textContent = `player: ${playerScore} and computer: ${computerScore} You won!!!`;
+    if (playerScore === 5) {
+        modalHead.textContent = 'yey!! you won';
+        inform.textContent = '';
+        playerPoint.textContent = 0;
+        compPoint.textContent = 0;
+        playerScore = 0;
+        computerScore = 0;
+        compChoice.textContent = '';
+        playerChoice.textContent = '';
+        modal.style.visibility = 'visible';
+        // document.body.setAttribute("style", 'visibility: hidden');
+        document.body.appendChild(modal);
+        main.setAttribute('id', "overlay");
 
-    } else {
-        winner.textContent = `player: ${playerScore} and computer: ${computerScore} You lost!!!`;
+
+        modalBtn.addEventListener('click', () => {
+            modal.remove();
+            // document.body.removeAttribute("style");
+            main.removeAttribute('id');
+        });
+
     }
+    else if (computerScore === 5) {
+        modalHead.textContent = 'ooh!! you lost';
+        inform.textContent = '';
+        playerPoint.textContent = 0;
+        compPoint.textContent = 0;
+        playerScore = 0;
+        computerScore = 0;
+        compChoice.textContent = '';
+        playerChoice.textContent = '';
+        /*     modal.style.visibility = 'visible';
+            document.body.setAttribute("style", 'visibility: hidden'); */
+        document.body.appendChild(modal);
+        main.setAttribute('id', "overlay");
 
-    winner.appendChild(tryAgain);
 
+        modalBtn.addEventListener('click', () => {
+            modal.remove();
+            /* document.body.removeAttribute("style"); */
+            main.setAttribute('id');
+
+
+        });
+    }
 }
+
 
 
 
