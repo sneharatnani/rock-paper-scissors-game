@@ -5,6 +5,10 @@ body {
     text-align: center;
     color: whitesmoke;
     font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 #overlay {
@@ -16,22 +20,22 @@ body {
     right: 0;
     width: 100%;
     height: 100%;
-    background-color: black;
+    background-color: #00000075;
 }
-
 
 h3 {
     text-transform: capitalize;
 }
 
 .sub-head {
+    padding: 0 4px;
     font-size: 1.7rem;
     margin-bottom: 0;
 }
 
 .heading {
     text-transform: uppercase;
-    font-size: 2.5em;
+    font-size: 2.5rem;
     font-weight: 100;
     font-family: 'Press Start 2P', cursive;
     margin: 0;
@@ -57,6 +61,11 @@ input {
     padding: 20px;
     margin: 0 10px;
     border-radius: 10px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+input:hover {
+    box-shadow: 1px 1px 5px 4px #f3bc34;
 }
 
 #choice div {
@@ -78,6 +87,7 @@ input {
     letter-spacing: 1px;
 }
 
+/* modal */
 .pop-up {
     z-index: 10;
     position: absolute;
@@ -94,6 +104,7 @@ input {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-shadow: 1px 1px 4px 4px #ffc107;
 }
 
 .pop-head {
@@ -103,6 +114,7 @@ input {
 }
 
 .pop-button {
+    cursor: pointer;
     padding: 10px;
     text-transform: capitalize;
     border-radius: 6px;
@@ -112,4 +124,73 @@ input {
     color: whitesmoke;
     background: #254e40cf;
 
+}
+
+.pop-button:hover {
+    box-shadow: 1px 1px 3px 2px #004d40;
+}
+
+/* footer */
+footer {
+    background-color: black;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+footer span {
+    font-size: 1.2rem;
+    color: red;
+}
+
+/* media queries */
+
+
+@media screen and (width: 540px) {
+    .heading {
+        font-size: 1.7rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .heading {
+        line-height: 1.3;
+        font-size: 1.8rem;
+    }
+
+    .sub-head {
+        font-size: 1.5rem;
+    }
+
+    input {
+        padding: 12px;
+    }
+
+    #choice div {
+        margin: 0 9px;
+    }
+
+    .pop-up {
+        width: 19rem;
+    }
+}
+
+@media screen and (width: 320px) {
+    input {
+        padding: 10px;
+    }
+
+    .pop-up {
+        width: 17rem;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .heading {
+        padding: 4rem 0;
+    }
+
+    input {
+        padding: 30px;
+    }
 }
